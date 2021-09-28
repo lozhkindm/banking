@@ -13,7 +13,7 @@ func Start() {
 
 	// wiring
 	ch := CustomerHandlers{
-		service: service.NewCustomerService(domain.NewCustomerRepositoryStub()),
+		service: service.NewCustomerService(domain.NewCustomerRepositoryDB()),
 	}
 
 	// routes
