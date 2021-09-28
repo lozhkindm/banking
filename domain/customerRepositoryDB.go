@@ -12,7 +12,7 @@ type CustomerRepositoryDB struct {
 }
 
 func (d CustomerRepositoryDB) FindAll() ([]Customer, error) {
-	findSql := "select customer_id, name, city, zipcode, date_of_birth birthdate, status from customers"
+	findSql := "select customer_id, name, city, zipcode, date_of_birth, status from customers"
 
 	rows, err := d.client.Query(findSql)
 
@@ -37,6 +37,23 @@ func (d CustomerRepositoryDB) FindAll() ([]Customer, error) {
 	}
 
 	return customers, nil
+}
+
+func (d CustomerRepositoryDB) FindById(id string) (*Customer, error) {
+	findSql := "select customer_id, name, city, zipcode, date_of_birth, status from customers where customer_id = ?"
+
+	row := d.client.QueryRow(findSql, id)
+
+	var c Customer
+
+	err := row.Scan(&c.Id, &c.Name, &c.City, &c.Zipcode, &c.BirthDate, &c.Status)
+
+	if err != nil {
+		log.Println("Error while scanning customer", err.Error())
+		return nil, err
+	}
+
+	return &c, nil
 }
 
 func NewCustomerRepositoryDB() CustomerRepositoryDB {

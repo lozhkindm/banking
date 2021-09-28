@@ -3,6 +3,8 @@ package app
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
+	"github.com/gorilla/mux"
 	"github.com/lozhkindm/banking/service"
 	"log"
 	"net/http"
@@ -19,11 +21,6 @@ type CustomerHandlers struct {
 }
 
 func (ch *CustomerHandlers) getAllCustomers(w http.ResponseWriter, r *http.Request) {
-	//customers := []Customer{
-	//	{Name: "Leha", City: "Ejevsk", Zipcode: "100505"},
-	//	{Name: "Lexa", City: "Moscow", Zipcode: "900303"},
-	//}
-
 	customers, err := ch.service.GetAllCustomers()
 
 	if err != nil {
@@ -36,5 +33,20 @@ func (ch *CustomerHandlers) getAllCustomers(w http.ResponseWriter, r *http.Reque
 	} else {
 		w.Header().Add("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(customers)
+	}
+}
+
+func (ch *CustomerHandlers) getCustomer(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["customer_id"]
+
+	customer, err := ch.service.GetCustomer(id)
+
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, err.Error())
+	} else {
+		w.Header().Add("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(customer)
 	}
 }
