@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/lozhkindm/banking/errs"
-	"log"
+	"github.com/lozhkindm/banking/logger"
 	"time"
 )
 
@@ -18,7 +18,7 @@ func (d CustomerRepositoryDB) FindAll() ([]Customer, *errs.AppError) {
 	rows, err := d.client.Query(findSql)
 
 	if err != nil {
-		log.Println("Error while querying customer table", err.Error())
+		logger.Error("Error while querying customer table " + err.Error())
 		return nil, errs.NewUnexpectedError("unexpected database error")
 	}
 
@@ -30,7 +30,7 @@ func (d CustomerRepositoryDB) FindAll() ([]Customer, *errs.AppError) {
 		err := rows.Scan(&c.Id, &c.Name, &c.City, &c.Zipcode, &c.BirthDate, &c.Status)
 
 		if err != nil {
-			log.Println("Error while scanning customers", err.Error())
+			logger.Error("Error while scanning customers " + err.Error())
 			return nil, errs.NewUnexpectedError("unexpected database error")
 		}
 
@@ -53,7 +53,7 @@ func (d CustomerRepositoryDB) FindById(id string) (*Customer, *errs.AppError) {
 		if err == sql.ErrNoRows {
 			return nil, errs.NewNotFoundError("customer not found")
 		} else {
-			log.Println("Error while scanning customer", err.Error())
+			logger.Error("Error while scanning customer " + err.Error())
 			return nil, errs.NewUnexpectedError("unexpected database error")
 		}
 	}
