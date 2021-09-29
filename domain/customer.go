@@ -1,17 +1,41 @@
 package domain
 
-import "github.com/lozhkindm/banking/errs"
-
-type Customer struct {
-	Id        string `json:"id" db:"customer_id"`
-	Name      string `json:"name" db:"name"`
-	City      string `json:"city" db:"city"`
-	Zipcode   string `json:"zip_code" db:"zipcode"`
-	BirthDate string `json:"birth_date" db:"date_of_birth"`
-	Status    string `json:"status" db:"status"`
-}
+import (
+	"github.com/lozhkindm/banking/dto"
+	"github.com/lozhkindm/banking/errs"
+)
 
 type CustomerRepository interface {
 	FindAll() ([]Customer, *errs.AppError)
 	FindById(string) (*Customer, *errs.AppError)
+}
+
+type Customer struct {
+	Id        string `db:"customer_id"`
+	Name      string `db:"name"`
+	City      string `db:"city"`
+	Zipcode   string `db:"zipcode"`
+	BirthDate string `db:"date_of_birth"`
+	Status    string `db:"status"`
+}
+
+func (c Customer) ToDto() dto.CustomerResponse {
+	return dto.CustomerResponse{
+		Id:        c.Id,
+		Name:      c.Name,
+		City:      c.City,
+		Zipcode:   c.Zipcode,
+		BirthDate: c.BirthDate,
+		Status:    c.statusAsText(),
+	}
+}
+
+func (c Customer) statusAsText() string {
+	status := "inactive"
+
+	if c.Status == "1" {
+		status = "active"
+	}
+
+	return status
 }
