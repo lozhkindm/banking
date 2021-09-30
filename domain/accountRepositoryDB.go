@@ -33,6 +33,6 @@ func (d AccountRepositoryDB) Save(a Account) (*Account, *errs.AppError) {
 	return &a, nil
 }
 
-func NewAccountRepositoryDb(client *sqlx.DB) AccountRepositoryDB {
+func NewAccountRepositoryDB(client *sqlx.DB) AccountRepositoryDB {
 	return AccountRepositoryDB{client: client}
 }
