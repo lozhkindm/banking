@@ -4,10 +4,8 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/lozhkindm/banking/config"
 	"github.com/lozhkindm/banking/errs"
 	"github.com/lozhkindm/banking/logger"
-	"time"
 )
 
 type CustomerRepositoryDB struct {
@@ -22,7 +20,7 @@ func (d CustomerRepositoryDB) FindAll() ([]Customer, *errs.AppError) {
 
 	if err != nil {
 		logger.Error("Error while querying customer table " + err.Error())
-		return nil, errs.NewUnexpectedError("unexpected database error")
+		return nil, errs.NewDatabaseError()
 	}
 
 	return customers, nil
@@ -40,23 +38,13 @@ func (d CustomerRepositoryDB) FindById(id string) (*Customer, *errs.AppError) {
 			return nil, errs.NewNotFoundError("customer not found")
 		} else {
 			logger.Error("Error while scanning customer " + err.Error())
-			return nil, errs.NewUnexpectedError("unexpected database error")
+			return nil, errs.NewDatabaseError()
 		}
 	}
 
 	return &customer, nil
 }
 
-func NewCustomerRepositoryDB() CustomerRepositoryDB {
-	client, err := sqlx.Open("mysql", config.NewDbConfig().AsDataSource())
-
-	if err != nil {
-		panic(err)
-	}
-
-	client.SetConnMaxLifetime(time.Minute * 3)
-	client.SetMaxOpenConns(10)
-	client.SetMaxIdleConns(10)
-
+func NewCustomerRepositoryDB(client *sqlx.DB) CustomerRepositoryDB {
 	return CustomerRepositoryDB{client: client}
 }

@@ -20,9 +20,9 @@ func NewNotFoundError(message string) *AppError {
 	}
 }
 
-func NewUnexpectedError(message string) *AppError {
+func NewDatabaseError() *AppError {
 	return &AppError{
 		Code:    http.StatusInternalServerError,
-		Message: message,
+		Message: "unexpected database error",
 	}
 }

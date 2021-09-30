@@ -8,7 +8,7 @@ import (
 
 type CustomerService interface {
 	GetAllCustomers() ([]dto.CustomerResponse, *errs.AppError)
-	GetCustomer(string) (*dto.CustomerResponse, *errs.AppError)
+	GetCustomer(id string) (*dto.CustomerResponse, *errs.AppError)
 }
 
 type DefaultCustomerService struct {

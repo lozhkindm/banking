@@ -7,7 +7,7 @@ import (
 
 type CustomerRepository interface {
 	FindAll() ([]Customer, *errs.AppError)
-	FindById(string) (*Customer, *errs.AppError)
+	FindById(id string) (*Customer, *errs.AppError)
 }
 
 type Customer struct {
