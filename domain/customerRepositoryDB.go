@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	"github.com/lozhkindm/banking/config"
 	"github.com/lozhkindm/banking/errs"
 	"github.com/lozhkindm/banking/logger"
 	"time"
@@ -47,7 +48,7 @@ func (d CustomerRepositoryDB) FindById(id string) (*Customer, *errs.AppError) {
 }
 
 func NewCustomerRepositoryDB() CustomerRepositoryDB {
-	client, err := sqlx.Open("mysql", "root:codecamp@tcp(localhost:13306)/banking")
+	client, err := sqlx.Open("mysql", config.NewDbConfig().AsDataSource())
 
 	if err != nil {
 		panic(err)
