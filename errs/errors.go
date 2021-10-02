@@ -26,3 +26,10 @@ func NewDatabaseError() *AppError {
 		Message: "unexpected database error",
 	}
 }
+
+func NewValidationError(message string) *AppError {
+	return &AppError{
+		Code:    http.StatusUnprocessableEntity,
+		Message: message,
+	}
+}
