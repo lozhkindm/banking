@@ -31,3 +31,28 @@ func (h AccountHandlers) newAccount(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+
+func (h AccountHandlers) newTransaction(w http.ResponseWriter, r *http.Request) {
+	var req dto.NewTransactionRequest
+
+	vars := mux.Vars(r)
+	accountId := vars["account_id"]
+	customerId := vars["customer_id"]
+
+	err := json.NewDecoder(r.Body).Decode(&req)
+
+	if err != nil {
+		writeResponse(w, http.StatusBadRequest, err.Error())
+	} else {
+		req.AccountId = accountId
+		req.CustomerId = customerId
+
+		t, err := h.service.NewTransaction(req)
+
+		if err != nil {
+			writeResponse(w, err.Code, err.AsMessage())
+		} else {
+			writeResponse(w, http.StatusOK, t)
+		}
+	}
+}
