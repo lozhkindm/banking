@@ -12,12 +12,25 @@ import (
 	"testing"
 )
 
-func TestGetAllCustomersReturns200(t *testing.T) {
-	mock := service.NewMockCustomerService(gomock.NewController(t))
-	ch := CustomerHandlers{service: mock}
-	router := mux.NewRouter()
+var router *mux.Router
+var ch CustomerHandlers
+var mock *service.MockCustomerService
+
+func setup(t *testing.T) func() {
+	mock = service.NewMockCustomerService(gomock.NewController(t))
+	ch = CustomerHandlers{service: mock}
+	router = mux.NewRouter()
 
 	router.HandleFunc("/customers", ch.getAllCustomers)
+
+	return func() {
+		router = nil
+	}
+}
+
+func TestGetAllCustomersReturns200(t *testing.T) {
+	teardown := setup(t)
+	defer teardown()
 
 	mockResponse := []dto.CustomerResponse{
 		{
@@ -51,11 +64,8 @@ func TestGetAllCustomersReturns200(t *testing.T) {
 }
 
 func TestGetAllCustomersReturns500(t *testing.T) {
-	mock := service.NewMockCustomerService(gomock.NewController(t))
-	ch := CustomerHandlers{service: mock}
-	router := mux.NewRouter()
-
-	router.HandleFunc("/customers", ch.getAllCustomers)
+	teardown := setup(t)
+	defer teardown()
 
 	mock.EXPECT().GetAllCustomers().Return(nil, errs.NewDatabaseError())
 
