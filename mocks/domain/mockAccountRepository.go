@@ -8,8 +8,8 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	errs "github.com/lozhkindm/banking-lib/errs"
 	domain "github.com/lozhkindm/banking/domain"
-	errs "github.com/lozhkindm/banking/errs"
 )
 
 // MockAccountRepository is a mock of AccountRepository interface.

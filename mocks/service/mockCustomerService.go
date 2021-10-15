@@ -8,8 +8,8 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	errs "github.com/lozhkindm/banking-lib/errs"
 	dto "github.com/lozhkindm/banking/dto"
-	errs "github.com/lozhkindm/banking/errs"
 )
 
 // MockCustomerService is a mock of CustomerService interface.

@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/lozhkindm/banking/errs"
+import "github.com/lozhkindm/banking-lib/errs"
 
 const (
 	DEPOSIT    = "deposit"

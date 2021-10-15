@@ -2,8 +2,8 @@ package app
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/lozhkindm/banking-lib/errs"
 	"github.com/lozhkindm/banking/domain"
-	"github.com/lozhkindm/banking/errs"
 	"net/http"
 	"strings"
 )

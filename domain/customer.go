@@ -1,8 +1,8 @@
 package domain
 
 import (
+	"github.com/lozhkindm/banking-lib/errs"
 	"github.com/lozhkindm/banking/dto"
-	"github.com/lozhkindm/banking/errs"
 )
 
 type CustomerRepository interface {

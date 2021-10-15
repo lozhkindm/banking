@@ -2,7 +2,7 @@ package domain
 
 import (
 	"encoding/json"
-	"github.com/lozhkindm/banking/logger"
+	"github.com/lozhkindm/banking-lib/logger"
 	"net/http"
 	"net/url"
 )

@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/lozhkindm/banking/errs"
-	"github.com/lozhkindm/banking/logger"
+	"github.com/lozhkindm/banking-lib/errs"
+	"github.com/lozhkindm/banking-lib/logger"
 )
 
 type CustomerRepositoryDB struct {

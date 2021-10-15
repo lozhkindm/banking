@@ -3,8 +3,8 @@ package domain
 import (
 	"database/sql"
 	"github.com/jmoiron/sqlx"
-	"github.com/lozhkindm/banking/errs"
-	"github.com/lozhkindm/banking/logger"
+	"github.com/lozhkindm/banking-lib/errs"
+	"github.com/lozhkindm/banking-lib/logger"
 	"strconv"
 )
 

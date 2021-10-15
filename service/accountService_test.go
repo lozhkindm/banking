@@ -2,9 +2,9 @@ package service
 
 import (
 	"github.com/golang/mock/gomock"
+	"github.com/lozhkindm/banking-lib/errs"
 	domain2 "github.com/lozhkindm/banking/domain"
 	"github.com/lozhkindm/banking/dto"
-	"github.com/lozhkindm/banking/errs"
 	"github.com/lozhkindm/banking/mocks/domain"
 	"testing"
 	"time"
